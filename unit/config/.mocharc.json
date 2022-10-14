@@ -1,7 +1,0 @@
-{
-  "extension": ["ts"],
-  "spec": ["**/unit/tests/**/*.spec.ts"],
-  "require": ["ts-node/register"],
-  "reporter": "mocha-multi-reporters",
-  "reporter-option": "configFile=./unit/config/reporterConfig.json"
-}

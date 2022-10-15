@@ -1,3 +1,14 @@
+import {
+  AGE_ERROR,
+  EMAIL_ERROR,
+  NAME_ERROR,
+  PASSWORD_ERROR_FIRST,
+  PASSWORD_ERROR_SECOND,
+  REG_ERROR,
+  REG_OK,
+  SURNAME_ERROR,
+} from "../support/errorMessage";
+
 export class RegistrationForm {
   constructor() {}
 
@@ -5,7 +16,7 @@ export class RegistrationForm {
     if (name.length > 3) {
       return name;
     } else {
-      throw Error("Name is too short or empty");
+      throw Error(NAME_ERROR);
     }
   }
 
@@ -13,7 +24,7 @@ export class RegistrationForm {
     if (surname.length > 3) {
       return surname;
     } else {
-      throw Error("Surname is too short or empty");
+      throw Error(SURNAME_ERROR);
     }
   }
 
@@ -22,7 +33,7 @@ export class RegistrationForm {
     if (reg.test(email)) {
       return email;
     } else {
-      throw Error("Email is invalid");
+      throw Error(EMAIL_ERROR);
     }
   }
 
@@ -31,17 +42,17 @@ export class RegistrationForm {
       if (password === confirmPassword) {
         return password;
       } else {
-        throw Error("Password and Confirm password values are not match");
+        throw Error(PASSWORD_ERROR_SECOND);
       }
     } else {
-      throw Error("Password or Confirm password values are too short");
+      throw Error(PASSWORD_ERROR_FIRST);
     }
   }
   public setAge(age: Number) {
     if (age >= 18) {
       return age;
     } else {
-      throw Error("Age is less than 18");
+      throw Error(AGE_ERROR);
     }
   }
   public registration(
@@ -50,17 +61,18 @@ export class RegistrationForm {
     email: string,
     password: string,
     confirmPassword: string,
-    age:Number
+    age: Number
   ) {
     if (
       this.setName(name) &&
       this.setSurname(surname) &&
       this.setEmail(email) &&
-      this.verifyPassword(password, confirmPassword) && this.setAge(age)
+      this.verifyPassword(password, confirmPassword) &&
+      this.setAge(age)
     ) {
-      return "Registration is successfully.";
+      return REG_OK;
     } else {
-      throw Error("Registration is failed");
+      throw Error(REG_ERROR);
     }
   }
 }

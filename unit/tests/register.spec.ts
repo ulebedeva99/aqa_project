@@ -1,6 +1,25 @@
 import assert from "assert";
 import { RegistrationForm } from "../src/registrationForm";
 import { expect } from "chai";
+import {
+  VALID_AGE,
+  VALID_EMAIL,
+  INVALID_CONFIRM_PASSWORD,
+  NAME,
+  SURNAME,
+  VALID_CONFIRM_PASSWORD,
+  VALID_PASSWORD,
+  INVALID_EMAIL,
+  INVALID_PASSWORD,
+  INVALID_AGE,
+} from "../support/testValues";
+import {
+  AGE_ERROR,
+  EMAIL_ERROR,
+  PASSWORD_ERROR_FIRST,
+  PASSWORD_ERROR_SECOND,
+  REG_OK,
+} from "../support/errorMessage";
 
 let register: any;
 
@@ -9,86 +28,86 @@ describe("Test for registration class methods", () => {
     register = new RegistrationForm();
   });
   it("The entered name should be valid", () => {
-    assert.ok(register.setName("Ulyana"));
+    assert.ok(register.setName(NAME));
   });
 
   it("The entered surname should be valid ", () => {
-    assert.ok(register.setSurname("Lebedeva"));
+    assert.ok(register.setSurname(SURNAME));
   });
 
   it("Should no errors after validation entered password and confirm password", () => {
     assert.notEqual(
-      register.verifyPassword("1q2w3e4r", "1q2w3e4r"),
-      "Password or Confirm password values are too short"
+      register.verifyPassword(VALID_PASSWORD, VALID_CONFIRM_PASSWORD),
+      PASSWORD_ERROR_FIRST
     );
   });
 
   it("The entered password and confirm password should be match", () => {
-    expect(() => register.verifyPassword("1q2w3e4r", "1q2w3e4r0")).to.throws(
-      "Password and Confirm password values are not match"
-    );
+    expect(() =>
+      register.verifyPassword(VALID_CONFIRM_PASSWORD, INVALID_CONFIRM_PASSWORD)
+    ).to.throws(PASSWORD_ERROR_SECOND);
   });
 
   it("The entered age should be valid", () => {
-    assert.ok(register.setAge(33));
-    assert.equal(register.setAge(33), 33);
+    assert.ok(register.setAge(VALID_AGE));
+    assert.equal(register.setAge(VALID_AGE), VALID_AGE);
   });
 
   it("Should no errors after validation email address", () => {
-    assert.notEqual(register.setEmail("test@test.ru"), "Email is invalid");
+    assert.notEqual(register.setEmail(VALID_EMAIL), EMAIL_ERROR);
   });
 
   it("Registration should be successfully with entered valid all data", () => {
     assert.equal(
       register.registration(
-        "Ulyana",
-        "Lebedeva",
-        "ulyana@mail.ru",
-        "123456",
-        "123456",
-        21
+        NAME,
+        SURNAME,
+        VALID_EMAIL,
+        VALID_PASSWORD,
+        VALID_CONFIRM_PASSWORD,
+        VALID_AGE
       ),
-      "Registration is successfully."
+      REG_OK
     );
   });
 
   it("Registration should be failed with entered ivalid email", () => {
     expect(() =>
       register.registration(
-        "Ulyana",
-        "Lebedeva",
-        "ulyana@mail.",
-        "123456",
-        "123456",
-        21
+        NAME,
+        SURNAME,
+        INVALID_EMAIL,
+        VALID_PASSWORD,
+        VALID_CONFIRM_PASSWORD,
+        VALID_AGE
       )
-    ).to.throw("Email is invalid");
+    ).to.throw(EMAIL_ERROR);
   });
 
   it("Registration should be failed with entered ivalid password", () => {
     expect(() =>
       register.registration(
-        "Ulyana",
-        "Lebedeva",
-        "ulyana@mail.ru",
-        "1234",
-        "123456",
-        21
+        NAME,
+        SURNAME,
+        VALID_EMAIL,
+        INVALID_PASSWORD,
+        VALID_CONFIRM_PASSWORD,
+        VALID_AGE
       )
-    ).to.throw("Password or Confirm password values are too short");
+    ).to.throw(PASSWORD_ERROR_FIRST);
   });
 
   it("Registration should be failed with entered age less that 18", () => {
     expect(() =>
       register.registration(
-        "Ulyana",
-        "Lebedeva",
-        "ulyana@mail.ru",
-        "123456",
-        "123456",
-        17
+        NAME,
+        SURNAME,
+        VALID_EMAIL,
+        VALID_PASSWORD,
+        VALID_CONFIRM_PASSWORD,
+        INVALID_AGE
       )
-    ).to.throw("Age is less than 18");
+    ).to.throw(AGE_ERROR);
   });
 
   after("Delete class instance", () => {

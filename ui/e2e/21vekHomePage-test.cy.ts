@@ -44,7 +44,7 @@ describe("21vek site - home page", () => {
     homePage.navigationHeader.getListButtonMore().should("have.length", 3);
   });
 
-  it(`Location should be change in location field to selected`, () => {
+  it(`Location should change in location field to new selected value`, () => {
     homePage.navigationHeader.clickOnLocationButton();
     homePage.navigationHeader.clearInputInLocationChangeForm();
     homePage.navigationHeader

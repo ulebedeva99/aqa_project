@@ -29,8 +29,8 @@ export class RegistrationForm {
   }
 
   public setEmail(email: string) {
-    let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-    if (reg.test(email)) {
+    const regExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (regExp.test(email)) {
       return email;
     } else {
       throw Error(EMAIL_ERROR);
@@ -48,6 +48,7 @@ export class RegistrationForm {
       throw Error(PASSWORD_ERROR_FIRST);
     }
   }
+
   public setAge(age: Number) {
     if (age >= 18) {
       return age;
@@ -55,6 +56,7 @@ export class RegistrationForm {
       throw Error(AGE_ERROR);
     }
   }
+
   public registration(
     name: string,
     surname: string,

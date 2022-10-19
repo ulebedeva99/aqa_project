@@ -24,7 +24,7 @@ describe("Test HTTP methods", () => {
       expect(res.data.length).to.equal(100);
     });
 
-    it(`Should return post with exist ID:${ID}`, async () => {
+    it(`Should return post with existing ID:${ID}`, async () => {
       try {
         res = await client.request(METHODS.GET, { url: `/posts/${ID}` });
       } catch (error: any) {
@@ -34,7 +34,7 @@ describe("Test HTTP methods", () => {
       expect(res.status).to.equal(200);
     });
 
-    it(`Should return 404 error with non-exist ID:${INVALID_ID}`, async () => {
+    it(`Should return 404 error with non-existing ID:${INVALID_ID}`, async () => {
       try {
         res = await client.request(METHODS.GET, {
           url: `/posts/${INVALID_ID}`,

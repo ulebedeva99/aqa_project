@@ -10,10 +10,6 @@ import {
 
 const productsPage = PageFactory.getPage(PAGES.PRODUCTS) as ProductsPage;
 
-Cypress.on("uncaught:exception", (err, runnable) => {
-  return false;
-});
-
 describe("21vek site - products page", () => {
   beforeEach(() => {
     productsPage.visitPage();
